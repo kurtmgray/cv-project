@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import ExperienceItem from './ExperienceItem'
 import EducationItem from './EducationItem'
-import uniqid from "uniqid"
 
 class PreviewCV extends Component {
   
@@ -10,7 +9,7 @@ class PreviewCV extends Component {
     
     const experienceItems = experienceArr.map(job => (
       <ExperienceItem 
-        key={job.key}
+        key={job.exKey}
         jobTitle={job.jobTitle} 
         company={job.company} 
         citySt={job.citySt} 
@@ -20,8 +19,9 @@ class PreviewCV extends Component {
     ))
     const educationItems = educationArr.map(school => (
       <EducationItem
-        key={school.key}
+        key={school.edKey}
         university={school.university}
+        city={school.city}
         degree={school.degree}
         major={school.major}
         attFrom={school.attFrom}

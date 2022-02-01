@@ -5,7 +5,6 @@ class Personal extends Component {
       
       return (
         <div>
-            <h3 className="personal">Personal Information</h3>
             <form>
                 <input 
                   onChange={this.props.handlePersonalChange}

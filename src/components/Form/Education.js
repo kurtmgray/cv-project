@@ -3,10 +3,11 @@ import React, { Component } from 'react'
 class Education extends Component {
   render() {
     return (
-      <div>
+      <div id={this.props.id}>
         <form>
             <input 
               onChange={this.props.handleEducationChange}
+              id={this.props.id}
               className="one-line" 
               type="text" 
               name="university" 
@@ -15,6 +16,7 @@ class Education extends Component {
             </input>
             <input 
               onChange={this.props.handleEducationChange}
+              id={this.props.id}
               className="one-line" 
               type="text" 
               name="city" 
@@ -23,6 +25,7 @@ class Education extends Component {
             </input>
             <input 
               onChange={this.props.handleEducationChange}
+              id={this.props.id}
               className="one-line" 
               type="text" 
               name="degree" 
@@ -31,6 +34,7 @@ class Education extends Component {
             </input>                
             <input 
               onChange={this.props.handleEducationChange}
+              id={this.props.id}
               className="one-line" 
               type="text" 
               name="major" 
@@ -39,6 +43,7 @@ class Education extends Component {
             </input>                
             <input 
               onChange={this.props.handleEducationChange}
+              id={this.props.id}
               className="one-line" 
               type="text" 
               name="attFrom" 
@@ -47,14 +52,14 @@ class Education extends Component {
             </input>                
             <input 
               onChange={this.props.handleEducationChange}
+              id={this.props.id}
               className="one-line" 
               type="text" 
               name="attUntil" 
               placeholder="Attended until"
               value={this.props.attUntil}>
             </input>
-            <button name="addEducation">Add</button>
-            <button name="deleteEducation">Delete</button>
+            <button onClick={this.props.handleEducationDelete} name="deleteEducation" id={this.props.id}>Delete</button>
         </form>
       </div>
       )

@@ -9,11 +9,14 @@ import uniqid from "uniqid";
 class Main extends Component {
   constructor(){
     super()
-    this.handlePersonalChange = this.handlePersonalChange.bind(this)
-    this.handleEducationChange = this.handleEducationChange.bind(this)
-    this.handleExperienceChange = this.handleExperienceChange.bind(this)
-    this.handleExperienceAdd = this.handleExperienceAdd.bind(this)
-    this.handleExperienceDelete = this.handleExperienceDelete.bind(this)
+
+    // don't need to bind to this if using arrow functions? mitch clarify?
+
+    // this.handlePersonalChange = this.handlePersonalChange.bind(this)
+    // this.handleEducationChange = this.handleEducationChange.bind(this)
+    // this.handleExperienceChange = this.handleExperienceChange.bind(this)
+    // this.handleExperienceAdd = this.handleExperienceAdd.bind(this)
+    // this.handleExperienceDelete = this.handleExperienceDelete.bind(this)
 
     this.state = {  
       personalState: {
@@ -25,9 +28,9 @@ class Main extends Component {
         email: '',
         description: '',
       },
+
       educationState: {
-        educationArr: [],
-        details: {
+        educationArr: [{
           university: '',
           city: '',
           degree: '',
@@ -35,117 +38,168 @@ class Main extends Component {
           attFrom: '',
           attUntil: '',
           edKey: uniqid(),
-
-        } 
+        }],
       },
-      experienceState: {
-        experienceArr: [],
-        details: {
-            jobTitle: '',
-            company: '',
-            citySt: '',
-            workFrom: '',
-            workUntil: '',
-            exKey: uniqid(),
-        }        
-      }
-    }
-  }  
-  
-  handlePersonalChange = (event) => {
-    const targetName = event.target.name
-    const targetValue = event.target.value
-    const { fName, lName, title, address, phone, email, description } = this.state.personalState 
-    this.setState({
-      personalState: {
-          fName: targetName === 'fName' ? targetValue : fName,
-          lName: targetName === 'lName' ? targetValue : lName,
-          title: targetName === 'title' ? targetValue : title,
-          address: targetName === 'address' ? targetValue : address,
-          phone: targetName === 'phone' ? targetValue : phone,
-          email: targetName === 'email' ? targetValue : email,
-          description: targetName === 'description' ? targetValue : description,
-      }
-    })
-    console.log(this.state.personalState)
-  }
 
-  handleEducationChange = (event) => {
-    const targetName = event.target.name
-    const targetValue = event.target.value
-    const { university, city, degree, major, attFrom, attUntil, id} = this.state.educationState.details
-    this.setState({
-      educationState: {
-        details: {
-          university: targetName === 'university' ? targetValue : university,
-          city: targetName === 'city' ? targetValue : city,
-          degree: targetName === 'degree' ? targetValue : degree,
-          major: targetName === 'major' ? targetValue : major,
-          attFrom: targetName === 'attFrom' ? targetValue : attFrom,
-          attUntil: targetName === 'attUntil' ? targetValue : attUntil,
-          id: id
-        },
-        educationArr: [this.state.educationState.details],
-      }
-    })
-    console.log(this.state.experienceState)
-  }
-
-  handleExperienceChange = (event) => {
-    event.preventDefault()
-    const targetName = event.target.name
-    const targetValue = event.target.value
-    console.log(event)
-    const { jobTitle, company, citySt, workFrom, workUntil, } = this.state.experienceState.details
-    this.setState({
       experienceState: {
-        details: {
-          jobTitle: targetName === 'jobTitle' ? targetValue : jobTitle,
-          company: targetName === 'company' ? targetValue : company,
-          citySt: targetName === 'citySt' ? targetValue : citySt,
-          workFrom: targetName === 'workFrom' ? targetValue : workFrom,
-          workUntil: targetName === 'workUntil' ? targetValue : workUntil,
-          //key: key
-        },
-        experienceArr: [this.state.experienceState.details],
-      }
-    })
-    console.log(this.state)
-  }
-
-  handleExperienceAdd = (event) => {
-    event.preventDefault()
-    console.log(event)
-    
-    this.setState({
-      experienceState: {
-        
-        details: {
+        experienceArr: [{
           jobTitle: '',
           company: '',
           citySt: '',
           workFrom: '',
           workUntil: '',
-          key: uniqid(),
-        },
-        experienceArr: this.state.experienceState.experienceArr.concat(this.state.experienceState.details)  
+          exKey: uniqid(),
+        }],
       }  
-    })
-    console.log(this.state.experienceState)
+    }
   }
   
-  handleExperienceDelete = (event) => {
-    event.preventDefault()
-    console.log(event)
+  handlePersonalChange = (e) => {
+    let personalState = {...this.state.personalState}
+    personalState[e.target.name] = e.target.value
+    this.setState({
+      personalState
+    })
+
+    // first attempt... HAH
+
+    // const targetName = event.target.name
+    // const targetValue = event.target.value
+    // const { fName, lName, title, address, phone, email, description } = this.state.personalState 
+    // this.setState({
+    //   personalState: {
+    //       fName: targetName === 'fName' ? targetValue : fName,
+    //       lName: targetName === 'lName' ? targetValue : lName,
+    //       title: targetName === 'title' ? targetValue : title,
+    //       address: targetName === 'address' ? targetValue : address,
+    //       phone: targetName === 'phone' ? targetValue : phone,
+    //       email: targetName === 'email' ? targetValue : email,
+    //       description: targetName === 'description' ? targetValue : description,
+    //   }
+    //})
+  }
+
+
+
+  handleExperienceChange = (e) => {
+    //create a copy
+    let experienceArrCopy = [...this.state.experienceState.experienceArr]
+    experienceArrCopy[e.target.id][e.target.name] = e.target.value
+    this.setState({
+      experienceState: {
+        experienceArr: experienceArrCopy
+      } 
+    })
+  }
+
+  handleEducationChange = (e) => {
+    let educationArrCopy = [...this.state.educationState.educationArr]
+    educationArrCopy[e.target.id][e.target.name] = e.target.value
+    this.setState({
+      educationState: {
+        educationArr: educationArrCopy
+      }  
+    })
+  }
+
+  handleExperienceAdd = () => {
+    this.setState({
+      experienceState: {
+        experienceArr: [
+          ...this.state.experienceState.experienceArr, 
+          {
+            jobTitle: '',
+            company: '',
+            citySt: '',
+            workFrom: '',
+            workUntil: '',
+            exKey: uniqid()
+          },
+        ], 
+      }    
+    })
+  }
+  
+  handleEducationAdd = () => {
+    this.setState({
+      educationState: {
+        educationArr: [
+          ...this.state.educationState.educationArr,
+          {
+            university: '',
+            city: '',
+            degree: '',
+            major: '',
+            attFrom: '',
+            attUntil: '',
+            edKey: uniqid(),
+          }
+        ]
+      }
+    })
+  }
+
+  handleExperienceDelete = (e) => {
+    e.preventDefault()
+    let experienceArrCopy = this.state.experienceState.experienceArr
+    experienceArrCopy.splice(e.target.id, 1)
+    this.setState({
+      experienceState: {
+        experienceArr: experienceArrCopy
+      }  
+    })
+  }
+
+  handleEducationDelete = (e) => {
+    e.preventDefault()
+    let educationArrCopy = this.state.educationState.educationArr
+    educationArrCopy.splice(e.target.id, 1)
+    this.setState({
+      educationState: {
+        educationArr: educationArrCopy
+      }  
+    })
   }
 
   render() {
     const { fName, lName, title, address, phone, email, description } = this.state.personalState
-    const { university, city, degree, major, attFrom, attUntil, edKey } = this.state.educationState.details
-    const { jobTitle, company, citySt, workFrom, workUntil, exKey } = this.state.experienceState.details
-
+    
+    // better to just map directly in the Main return?
+    const experienceForms = this.state.experienceState.experienceArr.map((job, index) => {
+      return (
+        <Experience
+          key={job.exKey}
+          jobTitle={job.jobTitle} 
+          company={job.company} 
+          citySt={job.citySt} 
+          workFrom={job.workFrom} 
+          workUntil={job.workUntil}
+          id={index}
+          handleExperienceChange={this.handleExperienceChange}  
+          handleExperienceDelete={this.handleExperienceDelete}
+        />
+      )
+    })
+    const educationForms = this.state.educationState.educationArr.map((school, index) => {
+      return (
+        <Education 
+          key={school.edKey}  
+          university={school.university}
+          city={school.city}
+          degree={school.degree}
+          major={school.major}
+          attFrom={school.attFrom}
+          attUntil={school.attUntil}
+          id={index}
+          handleEducationChange={this.handleEducationChange}
+          handleEducationDelete={this.handleEducationDelete}
+        />
+      )
+    })
+    
     return (
       <div>
+        <h3 className="personal">Personal Information</h3>
         <Personal 
           fName={fName}
           lName={lName}
@@ -156,28 +210,15 @@ class Main extends Component {
           description={description}
           handlePersonalChange={this.handlePersonalChange}
         />
+
         <h3 className="experience">Work Experience</h3>
-        <Experience 
-          jobTitle={jobTitle}
-          company={company}
-          citySt={citySt}
-          workFrom={workFrom}
-          workUntil={workUntil}
-          key={exKey}
-          handleExperienceChange={this.handleExperienceChange}  
-          handleExperienceAdd={this.handleExperienceAdd}
-          handleexperienceDelete={this.handleExperienceDelete}
-        /> 
+        {experienceForms}
+        <button onClick={this.handleExperienceAdd}>Add Work Experience</button>
+ 
+
         <h3 className="education">Education</h3>
-        <Education 
-          university={university}
-          city={city}
-          degree={degree}
-          major={major}
-          attFrom={attFrom}
-          attUntil={attUntil}
-          key={edKey}
-        />
+        {educationForms}
+        <button onClick={this.handleEducationAdd}>Add Education</button>
 
         <PreviewCV 
           personalState={this.state.personalState}

@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 
 class Experience extends Component {
+
     render() {
       return (
-        <div>
-          
+        <div id={this.props.id}>
           <form>
             <input 
               onChange={this.props.handleExperienceChange}
+              id={this.props.id}
               className="one-line" 
               type="text" 
               name="jobTitle" 
@@ -16,6 +17,7 @@ class Experience extends Component {
             </input>
             <input 
               onChange={this.props.handleExperienceChange}
+              id={this.props.id}
               className="one-line" 
               type="text" 
               name="company" 
@@ -24,7 +26,8 @@ class Experience extends Component {
             </input>
             <input 
               onChange={this.props.handleExperienceChange}
-              className="one-line" 
+              className="one-line"               
+              id={this.props.id}
               type="text" 
               name="citySt" 
               placeholder="City, State"
@@ -33,6 +36,7 @@ class Experience extends Component {
             <input 
               onChange={this.props.handleExperienceChange}
               className="one-line" 
+              id={this.props.id}
               type="text" 
               name="workFrom" 
               placeholder="Worked from"
@@ -40,14 +44,14 @@ class Experience extends Component {
             </input>
             <input 
               onChange={this.props.handleExperienceChange}
+              id={this.props.id}
               className="one-line" 
               type="text" 
               name="workUntil" 
               placeholder="Worked until"
               value={this.props.workUntil}>
             </input>
-            <button onClick={this.props.handleExperienceAdd} name="addExperience">Add</button>
-            <button onClick={this.props.handleExperienceDelete} name="deleteExperience">Delete</button>
+            <button onClick={this.props.handleExperienceDelete} id={this.props.id}>Delete</button>
           </form>
         </div>
       )
